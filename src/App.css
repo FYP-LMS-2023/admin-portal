@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.login{
+  display: flex;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+  margin-top: 180px;
+}

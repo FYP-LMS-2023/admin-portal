@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import Login from "./Pages/login";
+import Home from "./Pages/Home";
+import NotFound from "./Pages/NotFound";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import "./App.css";
+import React from "react";
+import { checkToken } from "./utils/utils";
 
 function App() {
+  const [isLoggedin, setisLoggedin] = React.useState(false);
+  React.useEffect(() => {
+    const result = checkToken();
+    setisLoggedin(result);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <BrowserRouter>
+        {isLoggedin ? (
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/Home" element={<Home />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        ) : (
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/Login" element={<Login/>} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        )}
+      </BrowserRouter>
     </div>
   );
 }
