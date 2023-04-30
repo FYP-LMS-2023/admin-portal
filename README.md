@@ -1,2 +1,2 @@
 # admin-portal
-admin-portal for our backend
+admin-portal for MASH LMS system
