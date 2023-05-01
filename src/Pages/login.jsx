@@ -1,4 +1,8 @@
-import { createTheme, Experimental_CssVarsProvider, ThemeProvider } from "@mui/material/styles";
+import {
+  createTheme,
+  Experimental_CssVarsProvider,
+  ThemeProvider,
+} from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -24,12 +28,13 @@ export default function Login() {
     const result = await login(email, password);
     if (result.status != 200) {
       setInputError(result.response.data.message);
-    } else  {
-        if(result.data.isAdmin){
-            window.location.assign("/home");
-        }else{
-            setInputError("Admin credentials required!")
-        }
+    } else {
+      if (result.data.isAdmin) {
+        sessionStorage.setItem("token", JSON.stringify(result.data.token));
+        window.location.assign("/home");
+      } else {
+        setInputError("Admin credentials required!");
+      }
     }
   };
 
@@ -53,34 +58,36 @@ export default function Login() {
             noValidate
             sx={{ mt: 1 }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              value={email}
-              autoComplete="email"
-              autoFocus
-              onChange={(event) => {
-                setEmail(event.target.value);
-              }}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              value={password}
-              onChange={(event) => {
-                setPassword(event.target.value);
-              }}
-              autoComplete="current-password"
-            />
+            <ThemeProvider theme={theme}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                value={email}
+                autoComplete="email"
+                autoFocus
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                value={password}
+                onChange={(event) => {
+                  setPassword(event.target.value);
+                }}
+                autoComplete="current-password"
+              />
+            </ThemeProvider>
             <ThemeProvider theme={theme}>
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}

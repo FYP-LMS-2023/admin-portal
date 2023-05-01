@@ -9,6 +9,7 @@ import { checkToken } from "./utils/utils";
 
 function App() {
   const [isLoggedin, setisLoggedin] = React.useState(false);
+
   React.useEffect(() => {
     const result = checkToken();
     setisLoggedin(result);
@@ -26,7 +27,7 @@ function App() {
         ) : (
           <Routes>
             <Route path="/" element={<Login />} />
-            <Route path="/Login" element={<Login/>} />
+            <Route path="/Login" element={<Login />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         )}
