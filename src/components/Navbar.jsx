@@ -13,13 +13,12 @@ import {
     createTheme,
     ThemeProvider,
 } from "@mui/material/styles";
-import LeftSideDrawer from './LeftSideBar';
+// import LeftSideDrawer from './LeftSideBar';
 
-const pages = [];
+// const pages = [];
 const settings = ['Profile', 'Logout'];
 
 function Navbar() {
-    const [drawerStatus, setDrawerStatus] = React.useState(false);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
 
@@ -35,16 +34,16 @@ function Navbar() {
         },
     });
 
-    const handleOpenNavMenu = (event) => {
-        // setAnchorElNav(event.currentTarget);
-        setDrawerStatus(true);
-    };
+    // const handleOpenNavMenu = (event) => {
+    //     // setAnchorElNav(event.currentTarget);
+    //     setDrawerStatus(true);
+    // };
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
 
     const handleCloseUserMenu = (setting) => {
-        if (setting == "Logout") {
+        if (setting === "Logout") {
             sessionStorage.clear();
             window.location.assign("/")
         }
@@ -88,7 +87,7 @@ function Navbar() {
                                 textDecoration: 'none',
                             }}
                         >
-                            SMASH LMS
+                            SMASH LMS ADMIN
                         </Typography>
 
 
