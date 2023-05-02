@@ -1,6 +1,5 @@
 import {
   createTheme,
-  Experimental_CssVarsProvider,
   ThemeProvider,
 } from "@mui/material/styles";
 import Button from "@mui/material/Button";
@@ -10,6 +9,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import CircularProgress from '@mui/material/CircularProgress';
 import React from "react";
 import { login } from "../api/apis";
 
@@ -17,22 +17,31 @@ export default function Login() {
   const [email, setEmail] = React.useState("admin@gmail.com");
   const [password, setPassword] = React.useState("123456");
   const [inputError, setInputError] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
   const theme = createTheme({
     palette: {
       primary: {
         main: "#000000",
+
       },
+      secondary: {
+        main: "#000000"
+      }
     },
   });
   const handleSubmit = async (event) => {
+    setLoading(true);
     const result = await login(email, password);
     if (result.status != 200) {
+      setLoading(false);
       setInputError(result.response.data.message);
     } else {
       if (result.data.isAdmin) {
         sessionStorage.setItem("token", JSON.stringify(result.data.token));
+        setLoading(false);
         window.location.assign("/home");
       } else {
+        setLoading(false)
         setInputError("Admin credentials required!");
       }
     }
@@ -97,7 +106,7 @@ export default function Login() {
             <h5 style={{ color: "red", opacity: "50%", marginTop: "-5px" }}>
               {inputError}
             </h5>
-            {!email || !password ? (
+            {((!email || !password) || loading) ? (
               <Button
                 disabled={true}
                 onClick={handleSubmit}
@@ -117,7 +126,15 @@ export default function Login() {
                 LogIn
               </Button>
             )}
+            <ThemeProvider theme={theme}>
+              <center >
+                {
+                  loading ? <CircularProgress sx={{ mt: "5%" }} /> : <></>
+                }
+              </center>
+            </ThemeProvider>
           </Box>
+
         </Box>
       </Container>
     </div>

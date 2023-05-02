@@ -1,5 +1,6 @@
 import Login from "./Pages/login";
 import Home from "./Pages/Home";
+import Navbar from "./components/Navbar";
 import NotFound from "./Pages/NotFound";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <div>
+      {isLoggedin ? <Navbar /> : <></>}
       <BrowserRouter>
         {isLoggedin ? (
           <Routes>
