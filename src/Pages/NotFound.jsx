@@ -12,7 +12,7 @@ const NotFound = () => {
       </center>
 
       <center>
-        <img src={notFound404} />
+        <img alt={"not found"} src={notFound404} />
       </center>
     </div>
   );

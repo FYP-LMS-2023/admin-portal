@@ -86,3 +86,9 @@
   justify-content: center;
   margin-top: 20%;
 }
+
+.users-table{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

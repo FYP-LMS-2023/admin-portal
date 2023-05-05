@@ -44,3 +44,30 @@ export const getAllUsers = async () => {
     return err;
   }
 };
+
+export const blockUser = async (id, flag) => {
+  try {
+    let input = {
+      
+    };
+
+    console.log(input);
+
+    const config = {
+      headers: {
+        Authorization: JSON.parse(sessionStorage.getItem("token")),
+        "Content-type": "application/json",
+      },
+      data: input,
+    };
+
+    const response = await axiosInstance.post(
+      `admin/blockUser/${id}/?flag=${flag}`,
+      config.data,
+      config
+    );
+    return response;
+  } catch (err) {
+    return err;
+  }
+}
