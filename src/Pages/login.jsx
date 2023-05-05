@@ -32,7 +32,7 @@ export default function Login() {
   const handleSubmit = async (event) => {
     setLoading(true);
     const result = await login(email, password);
-    if (result.status != 200) {
+    if (result.status !== 200) {
       setLoading(false);
       setInputError(result.response.data.message);
     } else {
@@ -59,7 +59,7 @@ export default function Login() {
           }}
         >
           <Typography component="h1" variant="h5">
-            MASH LMS ADMIN
+            SMASH LMS ADMIN
           </Typography>
           <Box
             component="form"
