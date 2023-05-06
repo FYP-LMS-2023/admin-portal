@@ -255,7 +255,7 @@ export default function UsersTable({ blockStatus, setBlockStatus }) {
       ) : (
         <TableContainer
           component={Paper}
-          sx={{ height: "100%", width: "75%", marginTop: "5%" }}
+          sx={{ height: "100%", width: "75%", marginTop: "2%" }}
         >
           <Table sx={{ minWidth: 300 }} aria-label="customized table">
             <EnhancedTableHead

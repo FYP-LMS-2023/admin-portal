@@ -3,6 +3,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { getAllUsers } from "../api/apis";
 import UsersTable from "../components/UsersTable";
+import { Button } from "@mui/material";
+
 const User = () => {
   const [loading, setLoading] = React.useState(false);
   const [blockStatus, setBlockStatus] = React.useState({});
@@ -37,7 +39,7 @@ const User = () => {
         main: "#000000",
       },
       secondary: {
-        main: "#000000",
+        main: "#ffffff",
       },
     },
   });
@@ -50,9 +52,17 @@ const User = () => {
           </div>
         </ThemeProvider>
       ) : (
-        <div>
+        <div className="User">
+          <div className="add-user">
+            <ThemeProvider theme={theme}>
+              <Button variant="contained">ADD USER</Button>
+            </ThemeProvider>
+          </div>
           <center>
-            <UsersTable blockStatus={blockStatus} setBlockStatus={setBlockStatus} />
+            <UsersTable
+              blockStatus={blockStatus}
+              setBlockStatus={setBlockStatus}
+            />
           </center>
         </div>
       )}

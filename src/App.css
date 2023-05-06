@@ -87,8 +87,21 @@
   margin-top: 20%;
 }
 
-.users-table{
+.users-table {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.User {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-user {
+  display: flex;
+  position: relative;
+  top: 25%;
+  left: 81.8%;
+  margin-top: 5%;
 }
