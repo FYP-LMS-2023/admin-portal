@@ -12,18 +12,18 @@ const User = () => {
       setLoading(true);
       const Users = await getAllUsers();
       var arr = Users.data;
-      var finalUsers = [];
-      var arr2 = [];
-      for (var i = 0; i < arr.length; i++) {
-        var temp = {
-          id: i + 1,
-          ...arr[i],
-        };
-        finalUsers.push(temp);
-        var temp2 = { ERP: arr[i].ERP, deleteFlag: arr[i].deleteFlag };
-        arr2.push(temp2);
-      }
-      sessionStorage.setItem("Users", JSON.stringify(finalUsers));
+      // var finalUsers = [];
+      // var arr2 = [];
+      // for (var i = 0; i < arr.length; i++) {
+      //   var temp = {
+      //     id: i + 1,
+      //     ...arr[i],
+      //   };
+      //   finalUsers.push(temp);
+      //   var temp2 = { ERP: arr[i].ERP, deleteFlag: arr[i].deleteFlag };
+      //   arr2.push(temp2);
+      // }
+      sessionStorage.setItem("Users", JSON.stringify(arr));
 
       setLoading(false);
     };

@@ -96,7 +96,7 @@ const headCells = [
   },
 ];
 
-var rows = JSON.parse(sessionStorage.getItem("Users"));
+// var rows = JSON.parse(sessionStorage.getItem("Users"));
 
 function EnhancedTableHead(props) {
   const { order, orderBy, onRequestSort } = props;
@@ -112,19 +112,19 @@ function EnhancedTableHead(props) {
             key={headCell.id}
             align={headCell.numeric ? "right" : "left"}
             padding={headCell.disablePadding ? "none" : "normal"}
-            sortDirection={orderBy === headCell.id ? order : false}
+            // sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
+            // active={orderBy === headCell.id}
+            // direction={orderBy === headCell.id ? order : "asc"}
+            // onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
-              {orderBy === headCell.id ? (
+              {/* {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
                   {order === "desc" ? "sorted descending" : "sorted ascending"}
                 </Box>
-              ) : null}
+              ) : null} */}
             </TableSortLabel>
           </StyledTableCell>
         ))}
@@ -134,9 +134,9 @@ function EnhancedTableHead(props) {
 }
 
 EnhancedTableHead.propTypes = {
-  onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-  orderBy: PropTypes.string.isRequired,
+  // onRequestSort: PropTypes.func.isRequired,
+  // order: PropTypes.oneOf(["asc", "desc"]).isRequired,
+  // orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
 
@@ -146,6 +146,9 @@ export default function UsersTable({ blockStatus, setBlockStatus }) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [page, setPage] = React.useState(0);
   const [state, setState] = React.useState({});
+  const [rows, setRows] = React.useState(
+    JSON.parse(sessionStorage.getItem("Users"))
+  );
 
   const IOSSwitch = styled((props) => (
     <Switch
@@ -211,15 +214,14 @@ export default function UsersTable({ blockStatus, setBlockStatus }) {
 
   const handleBlock = async (row) => {
     const response = await blockUser(row._id, !row.deleteFlag);
-   
+
     if (response.status === 200) {
       //   sessionStorage.removeItem("Users");
       for (var i = 0; i < blockStatus.length; i++) {
-        if (blockStatus[i].ERP === row.ERP){
-            
+        if (blockStatus[i].ERP === row.ERP) {
         }
-    }
-    //   window.location.reload();
+      }
+      //   window.location.reload();
       setState({});
     }
   };
@@ -235,58 +237,72 @@ export default function UsersTable({ blockStatus, setBlockStatus }) {
     setPage(0);
   };
 
-  const visibleRows = React.useMemo(
-    () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage
-      ),
-    [order, orderBy, page, rowsPerPage]
-  );
+  const visibleRows = React.useMemo(() => {
+    if (rows) {
+      console.log("inside if")
+      return rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+      
+    }{
+      console.log("outside if")
+    }
+  }, [order, orderBy, page, rows, rowsPerPage]);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
   return (
     <>
-      <TableContainer
-        component={Paper}
-        sx={{ height: "100%", width: "75%", marginTop: "5%" }}
-      >
-        <Table sx={{ minWidth: 300 }} aria-label="customized table">
-          <EnhancedTableHead
-            order={order}
-            orderBy={orderBy}
-            onRequestSort={handleRequestSort}
-            rowCount={rows.length}
-          ></EnhancedTableHead>
-          <TableBody>
-            {visibleRows.map((row) => (
-              <StyledTableRow key={row.ERP}>
-                <StyledTableCell component="th" scope="row">
-                  {row.fullName}
-                </StyledTableCell>
-                <StyledTableCell align="right">{row.email}</StyledTableCell>
-                <StyledTableCell align="right">{row.ERP}</StyledTableCell>
-                <StyledTableCell align="right">{row.userType}</StyledTableCell>
-                <StyledTableCell align="right">
-                  {<IOSSwitch row={row} />}
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
+      {!rows ? (
+        <>
+          {" "}
+          <h1>Loading</h1>
+        </>
+      ) : (
+        <TableContainer
+          component={Paper}
+          sx={{ height: "100%", width: "75%", marginTop: "5%" }}
+        >
+          <Table sx={{ minWidth: 300 }} aria-label="customized table">
+            <EnhancedTableHead
+              // order={order}
+              // orderBy={orderBy}
+              // onRequestSort={handleRequestSort}
+              rowCount={rows.length}
+            ></EnhancedTableHead>
+            <TableBody>
+              {rows ? (
+                visibleRows.map((row) => (
+                  <StyledTableRow key={row.ERP}>
+                    <StyledTableCell component="th" scope="row">
+                      {row.fullName}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">{row.email}</StyledTableCell>
+                    <StyledTableCell align="right">{row.ERP}</StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row.userType}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {<IOSSwitch row={row} />}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))
+              ) : (
+                <></>
+              )}
+            </TableBody>
+          </Table>
 
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </TableContainer>
+      )}
     </>
   );
 }
