@@ -3,7 +3,6 @@ import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import { createTheme } from "@mui/material/styles";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -11,9 +10,7 @@ import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import PropTypes from "prop-types";
-import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
-import { visuallyHidden } from "@mui/utils";
 import { blockUser } from "../api/apis";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -35,33 +32,34 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
 
-function getComparator(order, orderBy) {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
+// function descendingComparator(a, b, orderBy) {
+//   if (b[orderBy] < a[orderBy]) {
+//     return -1;
+//   }
+//   if (b[orderBy] > a[orderBy]) {
+//     return 1;
+//   }
+//   return 0;
+// }
 
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
+// function getComparator(order, orderBy) {
+//   return order === "desc"
+//     ? (a, b) => descendingComparator(a, b, orderBy)
+//     : (a, b) => -descendingComparator(a, b, orderBy);
+// }
+
+// function stableSort(array, comparator) {
+//   const stabilizedThis = array.map((el, index) => [el, index]);
+//   stabilizedThis.sort((a, b) => {
+//     const order = comparator(a[0], b[0]);
+//     if (order !== 0) {
+//       return order;
+//     }
+//     return a[1] - b[1];
+//   });
+//   return stabilizedThis.map((el) => el[0]);
+// }
 
 const headCells = [
   {
@@ -99,10 +97,10 @@ const headCells = [
 // var rows = JSON.parse(sessionStorage.getItem("Users"));
 
 function EnhancedTableHead(props) {
-  const { order, orderBy, onRequestSort } = props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
+  // const {  onRequestSort } = props;
+  // const createSortHandler = (property) => (event) => {
+  //   onRequestSort(event, property);
+  // };
 
   return (
     <TableHead>
@@ -141,11 +139,13 @@ EnhancedTableHead.propTypes = {
 };
 
 export default function UsersTable({ blockStatus, setBlockStatus }) {
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
+  // const [order, setOrder] = React.useState("asc");
+  // const [orderBy, setOrderBy] = React.useState("calories");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [page, setPage] = React.useState(0);
+  //eslint-disable-next-line
   const [state, setState] = React.useState({});
+  //eslint-disable-next-line
   const [rows, setRows] = React.useState(
     JSON.parse(sessionStorage.getItem("Users"))
   );
@@ -226,11 +226,11 @@ export default function UsersTable({ blockStatus, setBlockStatus }) {
     }
   };
 
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
+  // const handleRequestSort = (event, property) => {
+  //   const isAsc = orderBy === property && order === "asc";
+  //   setOrder(isAsc ? "desc" : "asc");
+  //   setOrderBy(property);
+  // };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -238,14 +238,9 @@ export default function UsersTable({ blockStatus, setBlockStatus }) {
   };
 
   const visibleRows = React.useMemo(() => {
-    if (rows) {
-      console.log("inside if")
+    if (rows)
       return rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-      
-    }{
-      console.log("outside if")
-    }
-  }, [order, orderBy, page, rows, rowsPerPage]);
+  }, [page, rows, rowsPerPage]);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
