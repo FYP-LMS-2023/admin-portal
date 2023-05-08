@@ -7,8 +7,6 @@ export const login = async (email, password) => {
       password: password,
     };
 
-    console.log(input);
-
     const config = {
       data: input,
     };
@@ -28,8 +26,6 @@ export const getAllUsers = async () => {
   try {
     let input = {};
 
-    console.log(input);
-
     const config = {
       headers: {
         Authorization: JSON.parse(sessionStorage.getItem("token")),
@@ -45,13 +41,28 @@ export const getAllUsers = async () => {
   }
 };
 
-export const blockUser = async (id, flag) => {
+export const getAllPrograms = async () => {
   try {
-    let input = {
-      
+    let input = {};
+
+    const config = {
+      headers: {
+        Authorization: JSON.parse(sessionStorage.getItem("token")),
+        "Content-type": "application/json",
+      },
+      data: input,
     };
 
-    console.log(input);
+    const response = await axiosInstance.get("program/getAllPrograms", config);
+    return response;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const blockUser = async (id, flag) => {
+  try {
+    let input = {};
 
     const config = {
       headers: {
@@ -70,4 +81,4 @@ export const blockUser = async (id, flag) => {
   } catch (err) {
     return err;
   }
-}
+};

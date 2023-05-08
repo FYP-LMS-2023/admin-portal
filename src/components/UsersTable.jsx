@@ -108,7 +108,13 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <StyledTableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
+            align={
+              headCell.numeric
+                ? headCell.label === "Block Status"
+                  ? "center"
+                  : "right"
+                : "left"
+            }
             padding={headCell.disablePadding ? "none" : "normal"}
             // sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -276,7 +282,7 @@ export default function UsersTable({ blockStatus, setBlockStatus }) {
                     <StyledTableCell align="right">
                       {row.userType}
                     </StyledTableCell>
-                    <StyledTableCell align="right">
+                    <StyledTableCell align="center">
                       {<IOSSwitch row={row} />}
                     </StyledTableCell>
                   </StyledTableRow>

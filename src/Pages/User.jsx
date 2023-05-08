@@ -1,9 +1,9 @@
 import React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { getAllUsers } from "../api/apis";
+import { getAllPrograms, getAllUsers } from "../api/apis";
 import UsersTable from "../components/UsersTable";
-import { Button } from "@mui/material";
+import CreateUser from "../components/CreateUser";
 
 const User = () => {
   const [loading, setLoading] = React.useState(false);
@@ -13,6 +13,7 @@ const User = () => {
     const fetchUsers = async () => {
       setLoading(true);
       const Users = await getAllUsers();
+      const Programs = await getAllPrograms();
       var arr = Users.data;
       // var finalUsers = [];
       // var arr2 = [];
@@ -26,7 +27,7 @@ const User = () => {
       //   arr2.push(temp2);
       // }
       sessionStorage.setItem("Users", JSON.stringify(arr));
-
+      sessionStorage.setItem("Programs", JSON.stringify(Programs.data));
       setLoading(false);
     };
 
@@ -53,11 +54,7 @@ const User = () => {
         </ThemeProvider>
       ) : (
         <div className="User">
-          <div className="add-user">
-            <ThemeProvider theme={theme}>
-              <Button variant="contained">ADD USER</Button>
-            </ThemeProvider>
-          </div>
+            <CreateUser />
           <center>
             <UsersTable
               blockStatus={blockStatus}
