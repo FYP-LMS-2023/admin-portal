@@ -82,3 +82,22 @@ export const blockUser = async (id, flag) => {
     return err;
   }
 };
+
+export const createUser = async (User) => {
+  try {
+    let input = User;
+
+    const config = {
+      data: input,
+    };
+
+    const response = await axiosInstance.post(
+      "auth/createUser",
+      config.data,
+      config
+    );
+    return response;
+  } catch (err) {
+    return err;
+  }
+};

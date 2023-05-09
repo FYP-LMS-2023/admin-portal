@@ -11,10 +11,16 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { TextField } from "@mui/material";
+import { createUser } from "../api/apis";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 export default function CreateUser() {
   const [open, setOpen] = React.useState(false);
+  const [openSnack, setOpenSnack] = React.useState(false);
   const [fullWidth] = React.useState(true);
+  const [errorStudent, setErrorStudent] = React.useState("");
+  const [errorFaculty, setErrorFaculty] = React.useState("");
   const [userType, setUserType] = React.useState("Student");
   const [cPassStudent, setCpassStudent] = React.useState("");
   const [cPassFaculty, setCpassFaculty] = React.useState("");
@@ -32,7 +38,7 @@ export default function CreateUser() {
     profilePic: "https://placeholder.png",
     phoneNumber: "",
     CGPA: "",
-    Program: "",
+    program: "",
   });
   const [facultySelection, setFacultySelection] = React.useState({
     email: "",
@@ -43,7 +49,7 @@ export default function CreateUser() {
     password: "",
     profilePic: "https://placeholder.png",
     phoneNumber: "",
-    Program: "",
+    program: "",
   });
 
   const handleClickOpen = () => {
@@ -53,9 +59,41 @@ export default function CreateUser() {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleCloseSnack = (event, reason) => {
+    if (reason === "clickaway") {
+      setOpenSnack(false);
+    }
+    setOpenSnack(false);
+  };
 
-  const handleCreateUser = (event) => {
-    
+  const handleCreateUser = async (event) => {
+    if (userType === "Student") {
+      const response = await createUser(studentSelection);
+      if (response.status === 200) {
+        setErrorStudent("");
+        console.log(response);
+        setOpenSnack(true);
+        setTimeout(() => {
+          setOpen(false);
+          window.location.reload(false);
+        }, 1000);
+      } else {
+        setErrorStudent(response.response.data.message);
+      }
+    } else {
+      const response = await createUser(facultySelection);
+      if (response.status === 200) {
+        setErrorFaculty("");
+        console.log(response);
+        setOpenSnack(true);
+        setTimeout(() => {
+          setOpen(false);
+          window.location.reload(false);
+        }, 1000);
+      } else {
+        setErrorFaculty(response.response.data.message);
+      }
+    }
   };
 
   const handleUserTypeChange = (event) => {
@@ -63,11 +101,11 @@ export default function CreateUser() {
   };
   const handleProgramChange = (event) => {
     if (userType === "Student") {
-      setStudentSelection({ ...studentSelection, Program: event.target.value });
-      console.log({ ...studentSelection, Program: event.target.value });
+      setStudentSelection({ ...studentSelection, program: event.target.value });
+      console.log({ ...studentSelection, program: event.target.value });
     } else if (userType === "Faculty") {
-      setFacultySelection({ ...facultySelection, Program: event.target.value });
-        console.log({ ...facultySelection, Program: event.target.value });
+      setFacultySelection({ ...facultySelection, program: event.target.value });
+      console.log({ ...facultySelection, program: event.target.value });
     }
   };
   const handleNameChange = (event) => {
@@ -410,15 +448,21 @@ export default function CreateUser() {
                 flexDirection: "column",
                 //   m: "auto",
                 alignItems: "center",
-                justifyContent: "space-evenly",
+                justifyContent: "center",
                 // width: "fit-content",
               }}
             >
-              <FormControl sx={{ mt: 8, minWidth: 225 }}>
+              {
+                <h3 style={{ color: "red", opacity: "55%", marginTop: "2%" }}>
+                  {userType === "Student" ? errorStudent : errorFaculty}
+                </h3>
+              }
+
+              <FormControl sx={{ mt: 2, minWidth: 225 }}>
                 <InputLabel htmlFor="max-width">Program</InputLabel>
                 <Select
                   autoFocus
-                  value={studentSelection.Program}
+                  value={studentSelection.program}
                   onChange={handleProgramChange}
                   label="Program"
                 >
@@ -449,7 +493,8 @@ export default function CreateUser() {
                   !studentSelection.ERP ||
                   !studentSelection.phoneNumber ||
                   !studentSelection.CGPA ||
-                  !studentSelection.profilePic)) ||
+                  !studentSelection.profilePic ||
+                  !studentSelection.program)) ||
               !checkPassword() ? (
                 <Button
                   disabled={true}
@@ -466,10 +511,7 @@ export default function CreateUser() {
                     !facultySelection.phoneNumber ||
                     !facultySelection.profilePic)) ||
                 !checkPassword() ? (
-                <Button
-                  disabled={true}
-                  variant="contained"
-                >
+                <Button disabled={true} variant="contained">
                   Create
                 </Button>
               ) : (
@@ -478,6 +520,20 @@ export default function CreateUser() {
                 </Button>
               )}
             </ThemeProvider>
+            <Snackbar
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              open={openSnack}
+              autoHideDuration={6000}
+              onClose={handleClose}
+            >
+              <MuiAlert
+                onClose={handleCloseSnack}
+                severity="success"
+                sx={{ width: "100%" }}
+              >
+                User Created Successfully
+              </MuiAlert>
+            </Snackbar>
           </DialogActions>
         </Dialog>
       </ThemeProvider>
