@@ -14,7 +14,7 @@ import { TextField } from "@mui/material";
 
 export default function CreateUser() {
   const [open, setOpen] = React.useState(false);
-  const [fullWidth, setFullWidth] = React.useState(true);
+  const [fullWidth] = React.useState(true);
   const [userType, setUserType] = React.useState("Student");
   const [cPassStudent, setCpassStudent] = React.useState("");
   const [cPassFaculty, setCpassFaculty] = React.useState("");
@@ -28,8 +28,8 @@ export default function CreateUser() {
     userType: "Student",
     notifications: [],
     courses: [],
-    password: "saad",
-    profilePic: "",
+    password: "",
+    profilePic: "https://placeholder.png",
     phoneNumber: "",
     CGPA: "",
     Program: "",
@@ -40,11 +40,9 @@ export default function CreateUser() {
     ERP: "",
     userType: "Faculty",
     notifications: [],
-    courses: [],
     password: "",
-    profilePic: "",
+    profilePic: "https://placeholder.png",
     phoneNumber: "",
-    CGPA: "",
     Program: "",
   });
 
@@ -57,7 +55,7 @@ export default function CreateUser() {
   };
 
   const handleCreateUser = (event) => {
-    setFullWidth(event.target.checked);
+    
   };
 
   const handleUserTypeChange = (event) => {
@@ -69,7 +67,7 @@ export default function CreateUser() {
       console.log({ ...studentSelection, Program: event.target.value });
     } else if (userType === "Faculty") {
       setFacultySelection({ ...facultySelection, Program: event.target.value });
-      //   console.log({ ...facultySelection, Program: event.target.value });
+        console.log({ ...facultySelection, Program: event.target.value });
     }
   };
   const handleNameChange = (event) => {
@@ -108,6 +106,48 @@ export default function CreateUser() {
       setFacultySelection({
         ...facultySelection,
         password: event.target.value,
+      });
+    }
+  };
+
+  const handleERPChange = (event) => {
+    if (userType === "Student") {
+      setStudentSelection({
+        ...studentSelection,
+        ERP: event.target.value,
+      });
+    } else if (userType === "Faculty") {
+      setFacultySelection({
+        ...facultySelection,
+        ERP: event.target.value,
+      });
+    }
+  };
+
+  const handlePhoneChange = (event) => {
+    if (userType === "Student") {
+      setStudentSelection({
+        ...studentSelection,
+        phoneNumber: event.target.value,
+      });
+    } else if (userType === "Faculty") {
+      setFacultySelection({
+        ...facultySelection,
+        phoneNumber: event.target.value,
+      });
+    }
+  };
+
+  const handleProfilePicChange = (event) => {
+    if (userType === "Student") {
+      setStudentSelection({
+        ...studentSelection,
+        profilePic: event.target.value,
+      });
+    } else if (userType === "Faculty") {
+      setFacultySelection({
+        ...facultySelection,
+        profilePic: event.target.value,
       });
     }
   };
@@ -157,7 +197,7 @@ export default function CreateUser() {
                 width: "fit-content",
               }}
             >
-              <FormControl sx={{ mt: 2, ml: 4, minWidth: 120 }}>
+              <FormControl sx={{ mt: 2, mb: 2, ml: 6.5, minWidth: 120 }}>
                 <InputLabel htmlFor="max-width">User Type</InputLabel>
                 <Select
                   autoFocus
@@ -217,7 +257,7 @@ export default function CreateUser() {
                         value={cPassStudent}
                         type="Password"
                         onChange={(e) => setCpassStudent(e.target.value)}
-                        success
+                        success="true"
                       />
                     ) : (
                       <TextField
@@ -252,13 +292,32 @@ export default function CreateUser() {
                   <FormControl sx={{ mt: 2, minWidth: 120 }}>
                     <TextField
                       label="Password"
+                      type="Password"
                       value={facultySelection.password}
                       onChange={handlePasswordChange}
                     />
                   </FormControl>
                   <FormControl sx={{ mt: 2, minWidth: 120 }}>
-                    <TextField label="Confirm Password" />
-                  </FormControl>{" "}
+                    {checkPassword() ? (
+                      <TextField
+                        label="Confirm Password"
+                        value={cPassFaculty}
+                        type="Password"
+                        onChange={(e) => setCpassFaculty(e.target.value)}
+                        success="true"
+                      />
+                    ) : (
+                      <TextField
+                        sx={{ marginBottom: "-20px" }}
+                        label="Confirm Password"
+                        helperText="Passwords don't match"
+                        type="Password"
+                        value={cPassFaculty}
+                        onChange={(e) => setCpassFaculty(e.target.value)}
+                        error={true}
+                      />
+                    )}
+                  </FormControl>
                 </React.Fragment>
               )}
             </Box>
@@ -274,18 +333,74 @@ export default function CreateUser() {
                 // width: "fit-content",
               }}
             >
-              <FormControl sx={{ mt: 2, minWidth: 120 }}>
-                <TextField label="ERP" type="number" />
-              </FormControl>
-              <FormControl sx={{ mt: 2, minWidth: 120 }}>
-                <TextField label="Phone" type="number" />
-              </FormControl>
-              <FormControl sx={{ mt: 2, minWidth: 120 }}>
-                <TextField label="CGPA" type="number" />
-              </FormControl>
-              <FormControl sx={{ mt: 2, minWidth: 120 }}>
-                <TextField label="Profile Picture" />
-              </FormControl>
+              {userType === "Student" ? (
+                <React.Fragment>
+                  {" "}
+                  <FormControl sx={{ mt: 2, minWidth: 120 }}>
+                    <TextField
+                      label="ERP"
+                      type="number"
+                      value={studentSelection.ERP}
+                      onChange={handleERPChange}
+                    />
+                  </FormControl>
+                  <FormControl sx={{ mt: 2, minWidth: 120 }}>
+                    <TextField
+                      label="Phone"
+                      type="number"
+                      value={studentSelection.phoneNumber}
+                      onChange={handlePhoneChange}
+                    />
+                  </FormControl>
+                  <FormControl sx={{ mt: 2, minWidth: 120 }}>
+                    <TextField
+                      label="CGPA"
+                      type="number"
+                      value={studentSelection.CGPA}
+                      onChange={(event) =>
+                        setStudentSelection({
+                          ...studentSelection,
+                          CGPA: event.target.value,
+                        })
+                      }
+                    />
+                  </FormControl>
+                  <FormControl sx={{ mt: 2, minWidth: 120 }}>
+                    <TextField
+                      label="Profile Picture"
+                      value={studentSelection.profilePic}
+                      onChange={handleProfilePicChange}
+                    />
+                  </FormControl>{" "}
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  {" "}
+                  <FormControl sx={{ mt: 2, minWidth: 120 }}>
+                    <TextField
+                      label="ERP"
+                      type="number"
+                      value={facultySelection.ERP}
+                      onChange={handleERPChange}
+                    />
+                  </FormControl>
+                  <FormControl sx={{ mt: 2, minWidth: 120 }}>
+                    <TextField
+                      label="Phone"
+                      type="number"
+                      value={facultySelection.phoneNumber}
+                      onChange={handlePhoneChange}
+                    />
+                  </FormControl>
+                  <FormControl sx={{ mt: 2, minWidth: 120 }}>
+                    <TextField
+                      label="Profile Picture"
+                      value={facultySelection.profilePic}
+                      onChange={handleProfilePicChange}
+                    />
+                  </FormControl>{" "}
+                </React.Fragment>
+              )}
             </Box>
             <Box
               noValidate
@@ -299,7 +414,7 @@ export default function CreateUser() {
                 // width: "fit-content",
               }}
             >
-              <FormControl sx={{ mt: 2, minWidth: 225 }}>
+              <FormControl sx={{ mt: 8, minWidth: 225 }}>
                 <InputLabel htmlFor="max-width">Program</InputLabel>
                 <Select
                   autoFocus
@@ -307,17 +422,18 @@ export default function CreateUser() {
                   onChange={handleProgramChange}
                   label="Program"
                 >
-                  {programs.map((val) => {
-                    return (
-                      <MenuItem key={val._id} value={val._id}>
-                        {val.code}
-                      </MenuItem>
-                    );
-                  })}
+                  {programs ? (
+                    programs.map((val) => {
+                      return (
+                        <MenuItem key={val._id} value={val._id}>
+                          {val.code}
+                        </MenuItem>
+                      );
+                    })
+                  ) : (
+                    <></>
+                  )}
                 </Select>
-              </FormControl>
-              <FormControl sx={{ mt: 2, minWidth: 120 }}>
-                <TextField label="Phone" type="number" />
               </FormControl>
             </Box>
           </DialogContent>
@@ -326,18 +442,33 @@ export default function CreateUser() {
               <Button variant="outlined" onClick={handleClose}>
                 Close
               </Button>
-              {userType === "Student" &&
-              (studentSelection.fullName ||
-              studentSelection.email ||
-              studentSelection.password ||
-              studentSelection.ERP ||
-              studentSelection.phoneNumber ||
-              studentSelection.CGPA ||
-              studentSelection.profilePic) ? (
+              {(userType === "Student" &&
+                (!studentSelection.fullName ||
+                  !studentSelection.email ||
+                  !studentSelection.password ||
+                  !studentSelection.ERP ||
+                  !studentSelection.phoneNumber ||
+                  !studentSelection.CGPA ||
+                  !studentSelection.profilePic)) ||
+              !checkPassword() ? (
                 <Button
                   disabled={true}
                   variant="contained"
                   onClick={handleCreateUser}
+                >
+                  Create
+                </Button>
+              ) : (userType === "Faculty" &&
+                  (!facultySelection.fullName ||
+                    !facultySelection.email ||
+                    !facultySelection.password ||
+                    !facultySelection.ERP ||
+                    !facultySelection.phoneNumber ||
+                    !facultySelection.profilePic)) ||
+                !checkPassword() ? (
+                <Button
+                  disabled={true}
+                  variant="contained"
                 >
                   Create
                 </Button>
