@@ -41,47 +41,6 @@ export const getAllUsers = async () => {
   }
 };
 
-export const getAllPrograms = async () => {
-  try {
-    let input = {};
-
-    const config = {
-      headers: {
-        Authorization: JSON.parse(sessionStorage.getItem("token")),
-        "Content-type": "application/json",
-      },
-      data: input,
-    };
-
-    const response = await axiosInstance.get("program/getAllPrograms", config);
-    return response;
-  } catch (err) {
-    return err;
-  }
-};
-
-export const getAllSemesters = async () => {
-  try {
-    let input = {};
-
-    const config = {
-      headers: {
-        Authorization: JSON.parse(sessionStorage.getItem("token")),
-        "Content-type": "application/json",
-      },
-      data: input,
-    };
-
-    const response = await axiosInstance.get(
-      "semester/getAllSemesters",
-      config
-    );
-    return response;
-  } catch (err) {
-    return err;
-  }
-};
-
 export const blockUser = async (id, flag) => {
   try {
     let input = {};
@@ -128,6 +87,28 @@ export const createUser = async (User) => {
   }
 };
 
+export const getAllSemesters = async () => {
+  try {
+    let input = {};
+
+    const config = {
+      headers: {
+        Authorization: JSON.parse(sessionStorage.getItem("token")),
+        "Content-type": "application/json",
+      },
+      data: input,
+    };
+
+    const response = await axiosInstance.get(
+      "semester/getAllSemesters",
+      config
+    );
+    return response;
+  } catch (err) {
+    return err;
+  }
+};
+
 export const createSemester = async (term, year, startDate, endDate) => {
   try {
     let code = `${term} ${year}`;
@@ -146,6 +127,55 @@ export const createSemester = async (term, year, startDate, endDate) => {
 
     const response = await axiosInstance.post(
       "semester/createSemester",
+      config.data,
+      config
+    );
+    return response;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const getAllPrograms = async () => {
+  try {
+    let input = {};
+
+    const config = {
+      headers: {
+        Authorization: JSON.parse(sessionStorage.getItem("token")),
+        "Content-type": "application/json",
+      },
+      data: input,
+    };
+
+    const response = await axiosInstance.get("program/getAllPrograms", config);
+    return response;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const createProgram = async (program) => {
+  try {
+    let input = {
+      name: program.name,
+      code: program.code,
+      description: program.description,
+      electives: [],
+      cores: [],
+      faculty: [],
+    };
+
+    const config = {
+      headers: {
+        Authorization: JSON.parse(sessionStorage.getItem("token")),
+        "Content-type": "application/json",
+      },
+      data: input,
+    };
+
+    const response = await axiosInstance.post(
+      "program/createProgram",
       config.data,
       config
     );
