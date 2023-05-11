@@ -458,27 +458,51 @@ export default function CreateUser() {
                 </h3>
               }
 
-              <FormControl sx={{ mt: 2, minWidth: 225 }}>
-                <InputLabel htmlFor="max-width">Program</InputLabel>
-                <Select
-                  autoFocus
-                  value={studentSelection.program}
-                  onChange={handleProgramChange}
-                  label="Program"
-                >
-                  {programs ? (
-                    programs.map((val) => {
-                      return (
-                        <MenuItem key={val._id} value={val._id}>
-                          {val.code}
-                        </MenuItem>
-                      );
-                    })
-                  ) : (
-                    <></>
-                  )}
-                </Select>
-              </FormControl>
+              {userType === "Student" ? (
+                <FormControl sx={{ mt: 2, minWidth: 225 }}>
+                  <InputLabel htmlFor="max-width">Program</InputLabel>
+                  <Select
+                    autoFocus
+                    value={studentSelection.program}
+                    onChange={handleProgramChange}
+                    label="Program"
+                  >
+                    {programs ? (
+                      programs.map((val) => {
+                        return (
+                          <MenuItem key={val._id} value={val._id}>
+                            {val.code}
+                          </MenuItem>
+                        );
+                      })
+                    ) : (
+                      <></>
+                    )}
+                  </Select>
+                </FormControl>
+              ) : (
+                <FormControl sx={{ mt: 2, minWidth: 225 }}>
+                  <InputLabel htmlFor="max-width">Program</InputLabel>
+                  <Select
+                    autoFocus
+                    value={facultySelection.program}
+                    onChange={handleProgramChange}
+                    label="Program"
+                  >
+                    {programs ? (
+                      programs.map((val) => {
+                        return (
+                          <MenuItem key={val._id} value={val._id}>
+                            {val.code}
+                          </MenuItem>
+                        );
+                      })
+                    ) : (
+                      <></>
+                    )}
+                  </Select>
+                </FormControl>
+              )}
             </Box>
           </DialogContent>
           <DialogActions sx={{ padding: 2 }}>

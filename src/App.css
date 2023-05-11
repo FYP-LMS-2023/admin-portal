@@ -105,3 +105,11 @@
   left: 81.8%;
   margin-top: 5%;
 }
+
+.add-semester {
+  display: flex;
+  position: relative;
+  top: 25%;
+  left: 79.8%;
+  margin-top: 5%;
+}
