@@ -113,3 +113,10 @@
   left: 79.8%;
   margin-top: 5%;
 }
+.add-course {
+  display: flex;
+  position: relative;
+  top: 25%;
+  left: 80.7%;
+  margin-top: 5%;
+}

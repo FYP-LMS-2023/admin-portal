@@ -11,6 +11,7 @@ const Home = () => {
     { title: "Semester", icon: semester, link: "/semester" },
     { title: "Program", icon: program, link: "/program" },
     { title: "Course", icon: course, link: "/course" },
+    { title: "Class", icon: course, link: "/class" },
   ];
   return (
     <div className="cards">

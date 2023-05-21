@@ -184,3 +184,52 @@ export const createProgram = async (program) => {
     return err;
   }
 };
+
+export const getAllCourses = async () => {
+  try {
+    let input = {};
+
+    const config = {
+      headers: {
+        Authorization: JSON.parse(sessionStorage.getItem("token")),
+        "Content-type": "application/json",
+      },
+      data: input,
+    };
+
+    const response = await axiosInstance.get("course/getAllCourses", config);
+    return response;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const createCourse = async (course) => {
+  try {
+    let input = {
+      courseName: course.courseName,
+      courseCode: course.courseCode,
+      courseDescription: course.courseDescription,
+      creditHours: course.creditHours,
+      classes: [],
+      programID: course.program,
+    };
+
+    const config = {
+      headers: {
+        Authorization: JSON.parse(sessionStorage.getItem("token")),
+        "Content-type": "application/json",
+      },
+      data: input,
+    };
+
+    const response = await axiosInstance.post(
+      "course/createCourse",
+      config.data,
+      config
+    );
+    return response;
+  } catch (err) {
+    return err;
+  }
+};

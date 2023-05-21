@@ -9,14 +9,22 @@ import FormControl from "@mui/material/FormControl";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { createProgram } from "../api/apis";
+import { createCourse } from "../api/apis";
 import { TextField } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
-export default function CreateProgram() {
+export default function CreateCourse() {
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState("");
   const [code, setCode] = React.useState("");
+  const [creditHours, setCreditHours] = React.useState("");
+  const [selectedProgram, setSelectedProgram] = React.useState("");
   const [description, setDescription] = React.useState("");
+  const [programs] = React.useState(
+    JSON.parse(sessionStorage.getItem("Programs"))
+  );
   const [error, setError] = React.useState("");
   const [openSnack, setOpenSnack] = React.useState(false);
 
@@ -27,6 +35,9 @@ export default function CreateProgram() {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleProgramChange = (event) => {
+    setSelectedProgram(event.target.value);
+  };
 
   const handleCloseSnack = (event, reason) => {
     if (reason === "clickaway") {
@@ -34,13 +45,15 @@ export default function CreateProgram() {
     }
     setOpenSnack(false);
   };
-  const handleCreateProgram = async () => {
+  const handleCreateCourse = async () => {
     let input = {
-      name: name,
-      code: code,
-      description: description,
+      courseName: name,
+      courseCode: code,
+      courseDescription: description,
+      creditHours: creditHours,
+      program: selectedProgram,
     };
-    const response = await createProgram(input);
+    const response = await createCourse(input);
     if (response.status === 200) {
       setError("");
       console.log(response);
@@ -66,10 +79,10 @@ export default function CreateProgram() {
 
   return (
     <React.Fragment>
-      <div className="add-semester">
+      <div className="add-course">
         <ThemeProvider theme={theme}>
           <Button variant="contained" onClick={handleClickOpen}>
-            ADD PROGRAM
+            ADD COURSE
           </Button>
         </ThemeProvider>
       </div>
@@ -79,7 +92,7 @@ export default function CreateProgram() {
         open={open}
         onClose={handleClose}
       >
-        <DialogTitle>Create New Program</DialogTitle>
+        <DialogTitle>Create New Course</DialogTitle>
         <DialogContent>
           <ThemeProvider theme={theme}>
             <Box
@@ -98,7 +111,7 @@ export default function CreateProgram() {
                   autoFocus
                   value={name}
                   onChange={(event) => setName(event.target.value)}
-                  label="Name"
+                  label="Course Name"
                 />
               </FormControl>
               <FormControl sx={{ mt: 3, mb: 2, minWidth: 200 }}>
@@ -106,16 +119,50 @@ export default function CreateProgram() {
                   autoFocus
                   value={code}
                   onChange={(event) => setCode(event.target.value)}
-                  label="Code"
+                  label="Course Code"
                 />
               </FormControl>
+              <FormControl sx={{ mt: 3, mb: 2, minWidth: 200 }}>
+                <TextField
+                  type="number"
+                  autoFocus
+                  value={creditHours}
+                  onChange={(event) => setCreditHours(event.target.value)}
+                  label="Credit hours"
+                />
+              </FormControl>
+              <FormControl sx={{ mt: 3, mb: 2, minWidth: 200 }}>
+                <InputLabel htmlFor="max-width">Program</InputLabel>
+                <Select
+                  autoFocus
+                  value={selectedProgram}
+                  onChange={handleProgramChange}
+                  label="Program"
+                >
+                  {programs ? (
+                    programs.map((val) => {
+                      return (
+                        <MenuItem key={val._id} value={val._id}>
+                          {val.code}
+                        </MenuItem>
+                      );
+                    })
+                  ) : (
+                    <></>
+                  )}
+                </Select>
+              </FormControl>
+            </Box>
+            <Box sx={{
+                marginLeft: "4.8%"
+            }}>
               <FormControl sx={{ mt: 3, mb: 2, minWidth: 500 }}>
                 <TextField
                   multiline={true}
                   autoFocus
                   value={description}
                   onChange={(event) => setDescription(event.target.value)}
-                  label="Description"
+                  label="Course Description"
                   rows={5}
                 />
               </FormControl>
@@ -131,16 +178,16 @@ export default function CreateProgram() {
               Close
             </Button>
 
-            {!name || !code || !description ? (
+            {!name || !code || !description || !selectedProgram || !creditHours ? (
               <Button
                 disabled={true}
                 variant="contained"
-                onClick={handleCreateProgram}
+                onClick={handleCreateCourse}
               >
                 Create
               </Button>
             ) : (
-              <Button variant="contained" onClick={handleCreateProgram}>
+              <Button variant="contained" onClick={handleCreateCourse}>
                 Create
               </Button>
             )}
@@ -156,7 +203,7 @@ export default function CreateProgram() {
               severity="success"
               sx={{ width: "100%" }}
             >
-              Program Created Successfully
+              Course Created Successfully
             </MuiAlert>
           </Snackbar>
         </DialogActions>

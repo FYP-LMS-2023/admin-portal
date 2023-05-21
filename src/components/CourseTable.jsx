@@ -11,7 +11,6 @@ import TablePagination from "@mui/material/TablePagination";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import PropTypes from "prop-types";
 
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -79,6 +78,12 @@ const headCells = [
     disablePadding: false,
     label: "Description",
   },
+  {
+    id: "Program",
+    numeric: false,
+    disablePadding: false,
+    label: "Program",
+  },
 ];
 
 // var rows = JSON.parse(sessionStorage.getItem("Users"));
@@ -100,6 +105,8 @@ function EnhancedTableHead(props) {
                 ? headCell.label === "Description" || headCell.label === "Code"
                   ? "center"
                   : "right"
+                : headCell.label === "Program"
+                ? "left"
                 : "left"
             }
             padding={headCell.disablePadding ? "none" : "normal"}
@@ -131,14 +138,12 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-export default function ProgramTable() {
+export default function CourseTable() {
   // const [order, setOrder] = React.useState("asc");
   // const [orderBy, setOrderBy] = React.useState("calories");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [page, setPage] = React.useState(0);
-  const [rows] = React.useState(
-    JSON.parse(sessionStorage.getItem("Programs"))
-  );
+  const [rows] = React.useState(JSON.parse(sessionStorage.getItem("Courses")));
 
   // const handleRequestSort = (event, property) => {
   //   const isAsc = orderBy === property && order === "asc";
@@ -181,13 +186,19 @@ export default function ProgramTable() {
             <TableBody>
               {rows ? (
                 visibleRows.map((row) => (
-                  <StyledTableRow key={row.code}>
+                  <StyledTableRow key={row.course.courseCode}>
                     <StyledTableCell component="th" scope="row">
-                      {row.name}
+                      {row.course.courseName}
                     </StyledTableCell>
-                    <StyledTableCell align="left">{row.code}</StyledTableCell>
-                    <StyledTableCell align="left">{row.description}</StyledTableCell>
-                    
+                    <StyledTableCell align="left">
+                      {row.course.courseCode}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">
+                      {row.course.courseDescription}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.program[0]?.code}
+                    </StyledTableCell>
                   </StyledTableRow>
                 ))
               ) : (
