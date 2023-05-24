@@ -22,6 +22,10 @@ export const login = async (email, password) => {
   }
 };
 
+export const getProfile = async () => {
+  
+}
+
 export const getAllUsers = async () => {
   try {
     let input = {};
