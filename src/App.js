@@ -7,6 +7,7 @@ import Course from "./Pages/Course";
 import Semester from "./Pages/Semester";
 import Program from "./Pages/Program";
 import Profile from "./Pages/Profile";
+import Class from "./Pages/Class";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.css";
@@ -34,6 +35,7 @@ function App() {
             <Route path="/user" element={<User />} />
             <Route path="/semester" element={<Semester />} />
             <Route path="/course" element={<Course />} />
+            <Route path="/class" element={<Class />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>
         ) : (

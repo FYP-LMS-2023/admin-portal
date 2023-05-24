@@ -1,34 +1,36 @@
 import React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { getAllCourses, getAllPrograms } from "../api/apis";
-import CreateCourse from "../components/CreateCourse";
-import CourseTable from "../components/CourseTable";
+import ClassTable from "../components/ClassTable";
+import CreateClass from "../components/CreateClass";
+import AssignTA from "../components/AssignTA";
+import AssignTeacher from "../components/AssignTeacher";
+import {
+  getAllClasses,
+  getAllCourses,
+  getAllSemesters,
+  getFaculty,
+  getStudents,
+} from "../api/apis";
 
-const Course = () => {
+const Class = () => {
   const [loading, setLoading] = React.useState(false);
   const [blockStatus, setBlockStatus] = React.useState({});
 
   React.useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const Programs = await getAllPrograms();
+      const Classes = await getAllClasses();
       const Courses = await getAllCourses();
-      //   const Programs = await getAllPrograms();
-      //   var arr = Programs.data;
-      // var finalUsers = [];
-      // var arr2 = [];
-      // for (var i = 0; i < arr.length; i++) {
-      //   var temp = {
-      //     id: i + 1,
-      //     ...arr[i],
-      //   };
-      //   finalUsers.push(temp);
-      //   var temp2 = { ERP: arr[i].ERP, deleteFlag: arr[i].deleteFlag };
-      //   arr2.push(temp2);
-      // }
-      sessionStorage.setItem("Programs", JSON.stringify(Programs.data));
+      const Semesters = await getAllSemesters();
+      const Students = await getStudents();
+      const Faculty = await getFaculty();
+
+      sessionStorage.setItem("Classes", JSON.stringify(Classes.data));
       sessionStorage.setItem("Courses", JSON.stringify(Courses.data));
+      sessionStorage.setItem("Semesters", JSON.stringify(Semesters.data));
+      sessionStorage.setItem("Students", JSON.stringify(Students.data));
+      sessionStorage.setItem("Faculty", JSON.stringify(Faculty.data));
       setLoading(false);
     };
 
@@ -54,10 +56,14 @@ const Course = () => {
           </div>
         </ThemeProvider>
       ) : (
-        <div className="User">
-          <CreateCourse />
+        <div className="">
+          <div className="buttons">
+            <CreateClass />
+            <AssignTA />
+            <AssignTeacher />
+          </div>
           <center>
-            <CourseTable
+            <ClassTable
               blockStatus={blockStatus}
               setBlockStatus={setBlockStatus}
             />
@@ -68,4 +74,4 @@ const Course = () => {
   );
 };
 
-export default Course;
+export default Class;

@@ -279,3 +279,139 @@ export const createCourse = async (course) => {
     return err;
   }
 };
+
+export const getAllClasses = async () => {
+  try {
+    let input = {};
+
+    const config = {
+      headers: {
+        Authorization: JSON.parse(sessionStorage.getItem("token")),
+        "Content-type": "application/json",
+      },
+      data: input,
+    };
+
+    const response = await axiosInstance.get("class/getAllClasses", config);
+    return response;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const createClass = async (object) => {
+  try {
+    let input = {
+      startDate: object.startDate,
+      courseID: object.courseID,
+      semesterID: object.semesterID,
+    };
+
+    const config = {
+      headers: {
+        Authorization: JSON.parse(sessionStorage.getItem("token")),
+        "Content-type": "application/json",
+      },
+      data: input,
+    };
+
+    const response = await axiosInstance.post(
+      "class/createClass",
+      config.data,
+      config
+    );
+    return response;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const getStudents = async () => {
+  try {
+    let input = {};
+
+    const config = {
+      headers: {
+        Authorization: JSON.parse(sessionStorage.getItem("token")),
+        "Content-type": "application/json",
+      },
+      data: input,
+    };
+
+    const response = await axiosInstance.get("auth/getStudents", config);
+    return response;
+  } catch (err) {
+    return err;
+  }
+}
+
+export const getFaculty = async () => {
+  try {
+    let input = {};
+
+    const config = {
+      headers: {
+        Authorization: JSON.parse(sessionStorage.getItem("token")),
+        "Content-type": "application/json",
+      },
+      data: input,
+    };
+
+    const response = await axiosInstance.get("auth/getFaculty", config);
+    return response;
+  } catch (err) {
+    return err;
+  }
+}
+
+export const assignTA = async (object) => {
+  try {
+    let input = {
+      classID : object.classID,
+      taID : object.taID,
+    };
+
+    const config = {
+      headers: {
+        Authorization: JSON.parse(sessionStorage.getItem("token")),
+        "Content-type": "application/json",
+      },
+      data: input,
+    };
+
+    const response = await axiosInstance.post(
+      "class/assignTA",
+      config.data,
+      config
+    );
+    return response;
+  } catch (err) {
+    return err;
+  }
+}
+
+export const assignTeacher = async (object) => {
+  try {
+    let input = {
+      classID : object.classID,
+      teacherID : object.teacherID,
+    };
+
+    const config = {
+      headers: {
+        Authorization: JSON.parse(sessionStorage.getItem("token")),
+        "Content-type": "application/json",
+      },
+      data: input,
+    };
+
+    const response = await axiosInstance.post(
+      "class/assignTeacher",
+      config.data,
+      config
+    );
+    return response;
+  } catch (err) {
+    return err;
+  }
+}

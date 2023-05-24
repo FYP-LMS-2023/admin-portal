@@ -178,3 +178,19 @@
   width : 100%;
   margin-left: 15.75rem;
 }
+
+.add-class{
+  display: flex;
+  position: relative;
+  top: 25%;
+  left: 81.5%;
+  margin-top: 5%;
+}
+
+.buttons{
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin-top: 5%;
+  left: 59.2%
+}
