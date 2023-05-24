@@ -23,7 +23,49 @@ export const login = async (email, password) => {
 };
 
 export const getProfile = async () => {
-  
+  try {
+    let input = {};
+
+    const config = {
+      headers: {
+        Authorization: JSON.parse(sessionStorage.getItem("token")),
+        "Content-type": "application/json",
+      },
+      data: input,
+    };
+
+    const response = await axiosInstance.get("auth/getProfile", config);
+    return response;
+  } catch (err) {
+    return err;
+  }
+}
+
+export const updatePassword = async (passwords) => {
+  try {
+    let input = {
+      currPass : passwords.currPass,
+      newPass : passwords.newPass,
+      confirmPass : passwords.confirmPass
+    };
+
+    const config = {
+      headers: {
+        Authorization: JSON.parse(sessionStorage.getItem("token")),
+        "Content-type": "application/json",
+      },
+      data: input,
+    };
+
+    const response = await axiosInstance.post(
+      "auth/updatePassword",
+      config.data,
+      config
+    );
+    return response;
+  } catch (err) {
+    return err;
+  }
 }
 
 export const getAllUsers = async () => {

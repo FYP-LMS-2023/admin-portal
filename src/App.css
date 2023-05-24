@@ -120,3 +120,61 @@
   left: 80.7%;
   margin-top: 5%;
 }
+
+.outer{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-left: 3%;
+  margin-top: -5%;
+}
+
+.row-1{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-bottom: 10%;
+}
+.row-2{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.row-3{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  /* margin-left: auto; */
+  margin-left: 29% ;
+  margin-top: 10%;
+}
+.Label-1{
+  display: flex;
+  flex-direction: row;
+  /* padding-left: 20%; */
+  /* margin-right: 60%; */
+  align-items: center;
+}
+.Label-2{
+  display: flex;
+  flex-direction: row;
+}
+.Label-3{
+  display: flex;
+  flex-direction: row;
+}
+.Label-4{
+  display: flex;
+  flex-direction: row;
+}
+.currpass{
+  width : 100%;
+}
+.newpass{
+  width : 100%;
+}
+.cnpass{
+  width : 100%;
+  margin-left: 15.75rem;
+}

@@ -42,6 +42,8 @@ function Navbar() {
       // sessionStorage.removeItem("token");
       sessionStorage.clear();
       window.location.assign("/");
+    } else if (setting === "Profile") {
+      window.location.assign("/profile");
     }
     setAnchorElUser(null);
   };

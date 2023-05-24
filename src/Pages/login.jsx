@@ -1,7 +1,4 @@
-import {
-  createTheme,
-  ThemeProvider,
-} from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -9,7 +6,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 import React from "react";
 import { login } from "../api/apis";
 
@@ -22,11 +19,10 @@ export default function Login() {
     palette: {
       primary: {
         main: "#000000",
-
       },
       secondary: {
-        main: "#000000"
-      }
+        main: "#000000",
+      },
     },
   });
   const handleSubmit = async (event) => {
@@ -41,7 +37,7 @@ export default function Login() {
         setLoading(false);
         window.location.assign("/home");
       } else {
-        setLoading(false)
+        setLoading(false);
         setInputError("Admin credentials required!");
       }
     }
@@ -106,7 +102,7 @@ export default function Login() {
             <h5 style={{ color: "red", opacity: "50%", marginTop: "-5px" }}>
               {inputError}
             </h5>
-            {((!email || !password) || loading) ? (
+            {!email || !password || loading ? (
               <Button
                 disabled={true}
                 onClick={handleSubmit}
@@ -121,20 +117,25 @@ export default function Login() {
                 onClick={handleSubmit}
                 fullWidth
                 variant="contained"
-                sx={{ mt: 0, mb: 2, backgroundColor: "black" }}
+                sx={{
+                  mt: 0,
+                  mb: 2,
+                  backgroundColor: "black",
+                  ":hover": {
+                    bgcolor: "#999",
+                    color: "white",
+                  },
+                }}
               >
                 LogIn
               </Button>
             )}
             <ThemeProvider theme={theme}>
-              <center >
-                {
-                  loading ? <CircularProgress sx={{ mt: "5%" }} /> : <></>
-                }
+              <center>
+                {loading ? <CircularProgress sx={{ mt: "5%" }} /> : <></>}
               </center>
             </ThemeProvider>
           </Box>
-
         </Box>
       </Container>
     </div>
