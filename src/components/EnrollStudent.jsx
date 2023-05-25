@@ -166,11 +166,11 @@ export default function EnrollStudent() {
                 variant="contained"
                 onClick={handleEnrollStudent}
               >
-                Assign
+                Enroll
               </Button>
             ) : (
               <Button variant="contained" onClick={handleEnrollStudent}>
-                Assign
+                Enroll
               </Button>
             )}
           </ThemeProvider>
