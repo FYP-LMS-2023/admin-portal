@@ -16,7 +16,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { createClass } from "../api/apis";
+import { createAttendance, createClass } from "../api/apis";
 
 export default function CreateClass() {
   const [open, setOpen] = React.useState(false);
@@ -52,16 +52,17 @@ export default function CreateClass() {
       courseID: courseID,
       semesterID: semesterID,
     };
-    console.log(object)
+    console.log(object);
     const response = await createClass(object);
     if (response.status === 200) {
       setError("");
+      const response2 = await createAttendance(response.data.result._id);
       console.log(response);
       setOpenSnack(true);
-      setTimeout(() => {
-        setOpen(false);
-        window.location.reload(false);
-      }, 1000);
+        setTimeout(() => {
+          setOpen(false);
+          window.location.reload(false);
+        }, 1000);
     } else {
       setError(response.response.data.message);
     }
@@ -70,8 +71,8 @@ export default function CreateClass() {
     setCourseID(event.target.value);
   };
   const handleSemesterChange = (event) => {
-    setSemesterID(event.target.value)
-  }
+    setSemesterID(event.target.value);
+  };
   const theme = createTheme({
     palette: {
       primary: {
@@ -87,7 +88,11 @@ export default function CreateClass() {
     <React.Fragment>
       <div className="">
         <ThemeProvider theme={theme}>
-          <Button sx={{marginRight: "15px", minWidth: "170px"}} variant="contained" onClick={handleClickOpen}>
+          <Button
+            sx={{ marginRight: "15px", minWidth: "170px" }}
+            variant="contained"
+            onClick={handleClickOpen}
+          >
             ADD CLASS
           </Button>
         </ThemeProvider>
@@ -175,7 +180,7 @@ export default function CreateClass() {
               Close
             </Button>
 
-            {!courseID || !semesterID || !startDate  ? (
+            {!courseID || !semesterID || !startDate ? (
               <Button
                 disabled={true}
                 variant="contained"

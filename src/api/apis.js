@@ -325,6 +325,30 @@ export const createClass = async (object) => {
     return err;
   }
 };
+export const createAttendance = async (classID) => {
+  try {
+    let input = {
+      classID: classID,
+    };
+
+    const config = {
+      headers: {
+        Authorization: JSON.parse(sessionStorage.getItem("token")),
+        "Content-type": "application/json",
+      },
+      data: input,
+    };
+
+    const response = await axiosInstance.post(
+      "attendance/createAttendance",
+      config.data,
+      config
+    );
+    return response;
+  } catch (err) {
+    return err;
+  }
+};
 
 export const getStudents = async () => {
   try {
