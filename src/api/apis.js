@@ -439,3 +439,29 @@ export const assignTeacher = async (object) => {
     return err;
   }
 }
+
+export const enrollStudent = async (object) => {
+  try {
+    let input = {
+      classID : object.classID,
+      studentID : object.studentID,
+    };
+
+    const config = {
+      headers: {
+        Authorization: JSON.parse(sessionStorage.getItem("token")),
+        "Content-type": "application/json",
+      },
+      data: input,
+    };
+
+    const response = await axiosInstance.post(
+      "class/enrollStudent",
+      config.data,
+      config
+    );
+    return response;
+  } catch (err) {
+    return err;
+  }
+}

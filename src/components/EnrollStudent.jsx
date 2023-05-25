@@ -12,16 +12,16 @@ import Select from "@mui/material/Select";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { assignTeacher } from "../api/apis";
+import { enrollStudent } from "../api/apis";
 
-export default function AssignTeacher() {
+export default function EnrollStudent() {
   const [open, setOpen] = React.useState(false);
   const [classID, setClassID] = React.useState("");
-  const [teacherID, setTeacherID] = React.useState("");
+  const [studentID, setStudentID] = React.useState("");
   const [error, setError] = React.useState("");
   const [openSnack, setOpenSnack] = React.useState(false);
-  const [Faculty] = React.useState(
-    JSON.parse(sessionStorage.getItem("Faculty"))
+  const [Students] = React.useState(
+    JSON.parse(sessionStorage.getItem("Students"))
   );
   const [classes] = React.useState(
     JSON.parse(sessionStorage.getItem("Classes"))
@@ -41,13 +41,13 @@ export default function AssignTeacher() {
     }
     setOpenSnack(false);
   };
-  const handleAssignTeacher = async () => {
+  const handleEnrollStudent = async () => {
     let object = {
-      teacherID: teacherID,
+      studentID: studentID,
       classID: classID,
     };
     // console.log(object);
-    const response = await assignTeacher(object);
+    const response = await enrollStudent(object);
     if (response.status === 200) {
       setError("");
       console.log(response);
@@ -60,8 +60,8 @@ export default function AssignTeacher() {
       setError(response.response.data.message);
     }
   };
-  const handleTeacherChange = (event) => {
-    setTeacherID(event.target.value);
+  const handleStudentChange = (event) => {
+    setStudentID(event.target.value);
   };
   const handleClassChange = (event) => {
     setClassID(event.target.value);
@@ -81,8 +81,8 @@ export default function AssignTeacher() {
     <React.Fragment>
       <div className="">
         <ThemeProvider theme={theme}>
-          <Button sx={{marginRight: "15px", minWidth: "170px"}}  variant="contained" onClick={handleClickOpen}>
-            ASSIGN Teacher
+          <Button sx={{minWidth: "170px"}} variant="contained" onClick={handleClickOpen}>
+            Enroll Student
           </Button>
         </ThemeProvider>
       </div>
@@ -92,7 +92,7 @@ export default function AssignTeacher() {
         open={open}
         onClose={handleClose}
       >
-        <DialogTitle>Assign Teacher</DialogTitle>
+        <DialogTitle>Enroll Student</DialogTitle>
         <DialogContent>
           <ThemeProvider theme={theme}>
             <Box
@@ -128,15 +128,15 @@ export default function AssignTeacher() {
                 </Select>
               </FormControl>
               <FormControl sx={{ mt: 3, mb: 2, minWidth: 275 }}>
-                <InputLabel htmlFor="Faculty">Faculty</InputLabel>
+                <InputLabel htmlFor="Students">Students</InputLabel>
                 <Select
                   autoFocus
-                  value={teacherID}
-                  onChange={handleTeacherChange}
-                  label="Faculty"
+                  value={studentID}
+                  onChange={handleStudentChange}
+                  label="Students"
                 >
-                  {Faculty ? (
-                    Faculty.map((val) => {
+                  {Students ? (
+                    Students.map((val) => {
                       return (
                         <MenuItem key={val._id} value={val._id}>
                           {`${val.fullName} - ${val.ERP}`}
@@ -160,16 +160,16 @@ export default function AssignTeacher() {
               Close
             </Button>
 
-            {!teacherID || !classID ? (
+            {!studentID || !classID ? (
               <Button
                 disabled={true}
                 variant="contained"
-                onClick={handleAssignTeacher}
+                onClick={handleEnrollStudent}
               >
                 Assign
               </Button>
             ) : (
-              <Button variant="contained" onClick={handleAssignTeacher}>
+              <Button variant="contained" onClick={handleEnrollStudent}>
                 Assign
               </Button>
             )}
@@ -185,7 +185,7 @@ export default function AssignTeacher() {
               severity="success"
               sx={{ width: "100%" }}
             >
-              Teacher Assigned Successfully
+              Student Enrolled Successfully
             </MuiAlert>
           </Snackbar>
         </DialogActions>

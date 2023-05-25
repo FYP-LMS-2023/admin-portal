@@ -12,6 +12,7 @@ import {
   getFaculty,
   getStudents,
 } from "../api/apis";
+import EnrollStudent from "../components/EnrollStudent";
 
 const Class = () => {
   const [loading, setLoading] = React.useState(false);
@@ -61,6 +62,7 @@ const Class = () => {
             <CreateClass />
             <AssignTA />
             <AssignTeacher />
+            <EnrollStudent />
           </div>
           <center>
             <ClassTable

@@ -56,7 +56,7 @@ export default function CreateClass() {
     const response = await createClass(object);
     if (response.status === 200) {
       setError("");
-      const response2 = await createAttendance(response.data.result._id);
+      await createAttendance(response.data.result._id);
       console.log(response);
       setOpenSnack(true);
         setTimeout(() => {
