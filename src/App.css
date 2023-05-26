@@ -50,7 +50,6 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-
 }
 
 .card {
@@ -62,10 +61,8 @@
 }
 
 .card-content {
-
   margin-top: 38%;
   justify-content: center;
-
 }
 
 .content {
@@ -102,7 +99,7 @@
   display: flex;
   position: relative;
   top: 25%;
-  left: 81.8%;
+  left: 81.2%;
   margin-top: 5%;
 }
 
@@ -110,18 +107,18 @@
   display: flex;
   position: relative;
   top: 25%;
-  left: 79.8%;
+  left: 78.9%;
   margin-top: 5%;
 }
 .add-course {
   display: flex;
   position: relative;
   top: 25%;
-  left: 80.7%;
+  left: 80%;
   margin-top: 5%;
 }
 
-.outer{
+.outer {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -130,56 +127,56 @@
   margin-top: -5%;
 }
 
-.row-1{
+.row-1 {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   margin-bottom: 10%;
 }
-.row-2{
+.row-2 {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
-.row-3{
+.row-3 {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   /* margin-left: auto; */
-  margin-left: 29% ;
+  margin-left: 29%;
   margin-top: 10%;
 }
-.Label-1{
+.Label-1 {
   display: flex;
   flex-direction: row;
   /* padding-left: 20%; */
   /* margin-right: 60%; */
   align-items: center;
 }
-.Label-2{
+.Label-2 {
   display: flex;
   flex-direction: row;
 }
-.Label-3{
+.Label-3 {
   display: flex;
   flex-direction: row;
 }
-.Label-4{
+.Label-4 {
   display: flex;
   flex-direction: row;
 }
-.currpass{
-  width : 100%;
+.currpass {
+  width: 100%;
 }
-.newpass{
-  width : 100%;
+.newpass {
+  width: 100%;
 }
-.cnpass{
-  width : 100%;
+.cnpass {
+  width: 100%;
   margin-left: 15.75rem;
 }
 
-.add-class{
+.add-class {
   display: flex;
   position: relative;
   top: 25%;
@@ -187,10 +184,10 @@
   margin-top: 5%;
 }
 
-.buttons{
+.buttons {
   display: flex;
   flex-direction: row;
   position: relative;
   margin-top: 5%;
-  left: 49.7%
+  left: 44.9%;
 }
